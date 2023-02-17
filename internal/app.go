@@ -4,10 +4,15 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"github.com/valyevo/gosimple/internal/routes"
 )
 
-// cfgFilename viper 配置文件名
-var cfgFilename = "app"
+var (
+	// cfgFilename viper 配置文件名
+	cfgFilename = "app"
+	// routeGroupName 应用路由组名
+	routeGroupName = "app"
+)
 
 func NewApp() *cobra.Command {
 	cmd := &cobra.Command{
@@ -40,5 +45,9 @@ func NewApp() *cobra.Command {
 
 // runApp App 实际业务代码入口
 func runApp() error {
+	if err := initGin(routes.ApiRoutes); err != nil {
+		return err
+	}
+
 	return nil
 }
