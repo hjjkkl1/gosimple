@@ -8,4 +8,6 @@ go get github.com/spf13/cobra
 go get -u github.com/gin-gonic/gin
 # Cors 跨域库
 go get github.com/gin-contrib/cors
+# Zap 日志库
+go get go.uber.org/zap
 ```
