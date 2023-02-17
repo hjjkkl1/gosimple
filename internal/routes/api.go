@@ -1,9 +1,9 @@
 package routes
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"github.com/valyevo/gosimple/internal/pkg/core"
+	"github.com/valyevo/gosimple/internal/pkg/errcode"
 )
 
 type RouteFunc func(app *gin.RouterGroup)
@@ -13,9 +13,12 @@ func ApiRoutes(app *gin.RouterGroup) {
 	app.Use()
 	// 注册路由
 	app.GET("", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"message": "hello",
-			"code":    0,
-		})
+		data := []interface{}{
+			"well",
+			"hello",
+			"valye",
+		}
+
+		core.WriteResponse(ctx, errcode.OK, data)
 	})
 }
