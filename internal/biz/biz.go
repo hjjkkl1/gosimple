@@ -1,7 +1,7 @@
 package biz
 
 import (
-	"github.com/valyevo/gosimple/internal/controller/biz/user"
+	"github.com/valyevo/gosimple/internal/biz/user"
 	"github.com/valyevo/gosimple/internal/store"
 )
 
