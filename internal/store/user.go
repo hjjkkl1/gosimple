@@ -1,6 +1,10 @@
 package store
 
-import "gorm.io/gorm"
+import (
+	"errors"
+
+	"gorm.io/gorm"
+)
 
 type UserStore interface {
 	Create() error
@@ -8,7 +12,7 @@ type UserStore interface {
 }
 
 type user struct {
-	*gorm.DB
+	db *gorm.DB
 }
 
 func newUser(db *gorm.DB) *user {
@@ -18,7 +22,7 @@ func newUser(db *gorm.DB) *user {
 var _ UserStore = (*user)(nil)
 
 func (u *user) Create() error {
-	return nil
+	return errors.New("create failed")
 }
 func (u *user) Get() error {
 	return nil
