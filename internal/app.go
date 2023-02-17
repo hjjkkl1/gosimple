@@ -45,8 +45,10 @@ func NewApp() *cobra.Command {
 
 // runApp App 实际业务代码入口
 func runApp() error {
-	// TODO: 初始化数据库连接
-
+	// 初始化数据层
+	if err := initStore(); err != nil {
+		return err
+	}
 	// 初始化 Gin 框架
 	if err := initGin(routes.ApiRoutes); err != nil {
 		return err
