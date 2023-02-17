@@ -16,6 +16,7 @@ import (
 	"github.com/valyevo/gosimple/internal/routes"
 )
 
+// initConfig 初始化配置
 func initConfig() {
 	// 配置路径
 	baseDir := "configs"
@@ -31,6 +32,7 @@ func initConfig() {
 	}
 }
 
+// 初始化 Gin 框架
 func initGin(routef routes.RouteFunc) error {
 	// 配置服务器模式
 	gin.SetMode(viper.GetString("runmode"))
@@ -59,11 +61,9 @@ func initGin(routef routes.RouteFunc) error {
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	// 等待退出信号
 	<-quit
-
 	// 创建 context
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-
 	// 关闭服务
 	if err := httpsrv.Shutdown(ctx); err != nil {
 		// TODO: 处理错误日志
