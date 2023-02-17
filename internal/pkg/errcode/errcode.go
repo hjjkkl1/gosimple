@@ -27,7 +27,7 @@ func (e *Errcode) SetMsg(fomatString string, args ...interface{}) {
 
 // DecodeE 解析错误
 func DecodeE(err error) (int, string, string, string) {
-	if err != nil {
+	if err == nil {
 		return OK.Http, OK.Code, OK.Msg, OK.Ref
 	}
 
