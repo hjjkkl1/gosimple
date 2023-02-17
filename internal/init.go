@@ -14,6 +14,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"github.com/valyevo/gosimple/internal/routes"
+	"github.com/valyevo/gosimple/internal/store"
+	"github.com/valyevo/gosimple/pkg/dbc"
 )
 
 // initConfig 初始化配置
@@ -26,9 +28,9 @@ func initConfig() {
 	viper.SetConfigFile(path)
 	viper.AutomaticEnv()
 	if err := viper.ReadInConfig(); err != nil {
-		fmt.Fprintln(os.Stderr, "[config] config not found >>", viper.ConfigFileUsed())
+		fmt.Fprintln(os.Stderr, "[config]\t\t\t config not found >>", viper.ConfigFileUsed())
 	} else {
-		fmt.Fprintln(os.Stdout, "[config] using config file >>", viper.ConfigFileUsed())
+		fmt.Fprintln(os.Stdout, "[config]\t\t\t using config file >>", viper.ConfigFileUsed())
 	}
 }
 
@@ -69,6 +71,29 @@ func initGin(routef routes.RouteFunc) error {
 		// TODO: 处理错误日志
 		return err
 	}
+
+	return nil
+}
+
+func initStore() error {
+	dbOptions := &dbc.DatabaseOptions{
+		Host:                  viper.GetString("db.host"),
+		Username:              viper.GetString("db.username"),
+		Password:              viper.GetString("db.password"),
+		Database:              viper.GetString("db.database"),
+		MaxIdleConnections:    viper.GetInt("db.max-idle-connections"),
+		MaxOpenConnections:    viper.GetInt("db.max-open-connections"),
+		MaxConnectionLifeTime: viper.GetDuration("db.max-connection-life-time"),
+		LogLevel:              viper.GetInt("db.log-level"),
+	}
+
+	ins, err := dbc.NewDatabase(dbOptions)
+	if err != nil {
+		return err
+	}
+
+	_ = store.NewDatastore(ins)
+	fmt.Fprintln(os.Stderr, "[database]\t\t\t database connected")
 
 	return nil
 }
