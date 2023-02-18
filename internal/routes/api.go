@@ -37,7 +37,7 @@ func ApiRoutes(app *gin.RouterGroup) {
 	loginCtrl := login.NewLoginController(store.D)
 	authGrp := app.Group("/auth")
 	{
-		authGrp.POST("/login", loginCtrl.Mobile)
+		authGrp.POST("/mlogin", loginCtrl.Mobile)
 	}
 
 	// User 注册用户路由
