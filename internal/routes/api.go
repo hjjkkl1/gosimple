@@ -3,6 +3,7 @@ package routes
 import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/valyevo/gosimple/internal/controller/auth/login"
 	"github.com/valyevo/gosimple/internal/controller/user"
 	"github.com/valyevo/gosimple/internal/pkg/core"
 	"github.com/valyevo/gosimple/internal/pkg/errcode"
@@ -30,6 +31,14 @@ func ApiRoutes(app *gin.RouterGroup) {
 
 		core.WriteResponse(ctx, errcode.OK, data)
 	})
+
+	// 注册路由
+	// 手机号注册
+	loginCtrl := login.NewLoginController(store.D)
+	authGrp := app.Group("/auth")
+	{
+		authGrp.POST("/login", loginCtrl.Mobile)
+	}
 
 	// User 注册用户路由
 	userCtrl := user.New(store.D)
