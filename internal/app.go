@@ -11,7 +11,7 @@ var (
 	// cfgFilename viper 配置文件名
 	cfgFilename = "app"
 	// routeGroupName 应用路由组名
-	routeGroupName = "app"
+	routeGroupName = "api"
 )
 
 func NewApp() *cobra.Command {
