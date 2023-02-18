@@ -21,8 +21,9 @@ func (e *Errcode) Error() string {
 }
 
 // SetMsg 设置错误信息
-func (e *Errcode) SetMsg(fomatString string, args ...interface{}) {
+func (e *Errcode) SetMsg(fomatString string, args ...interface{}) *Errcode {
 	e.Msg = fmt.Sprintf(fomatString, args...)
+	return e
 }
 
 // DecodeE 解析错误
